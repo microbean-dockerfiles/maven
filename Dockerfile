@@ -1,12 +1,13 @@
 FROM microbean/base:8
 LABEL maintainer "Laird Nelson <ljnelson@microbean.org>" org.microbean.docker.repository.name="microbean/maven"
-USER root
+RUN yum --assumeyes install gzip tar
 WORKDIR /usr/local
 RUN curl --silent http://www-us.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz | tar -zx && \
     ln -s apache-maven-3.5.0 maven && \
     cd bin && \
     ln -s ../maven/bin/mvn mvn
 USER microbean
+ENV HOME=/home/microbean
 WORKDIR ${HOME}
 ENV M2_HOME /usr/local/maven
 ENV M2_REPO=${HOME}/.m2/repository
